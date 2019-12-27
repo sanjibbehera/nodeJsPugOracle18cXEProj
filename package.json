@@ -1,0 +1,42 @@
+{
+  "name": "nodeJsPugOracle18cXEProj",
+  "version": "1.0.0",
+  "description": "Personal Project with Node.js, Pug and Oracle 18c.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "start:dev": "npx nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanjibbehera/nodeJsPugOracle18cXEProj.git"
+  },
+  "keywords": [
+    "NODEJS",
+    "PUG",
+    "ORACLE",
+    "BOOTSTRAP"
+  ],
+  "author": "Sanjib Behera",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sanjibbehera/nodeJsPugOracle18cXEProj/issues"
+  },
+  "homepage": "https://github.com/sanjibbehera/nodeJsPugOracle18cXEProj#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bootstrap": "^4.4.1",
+    "braces": "^3.0.2",
+    "core-js": "^3.6.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jquery": "^3.4.1",
+    "morgan": "^1.9.1",
+    "nodemon": "^2.0.2",
+    "oracledb": "^4.1.0",
+    "popper.js": "^1.16.0",
+    "pug": "^2.0.4"
+  }
+}
