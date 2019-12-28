@@ -31,6 +31,7 @@ var devenv2DBConfDataRoutes = require('./routers/dev/showDevDBEnv2Data');
 app.use('/', mainPageRoutes);
 
 // For Dev Envs..
+var dev1confdb = require('./routers/dev/dev1_db_connectDB');
 var dev2confdb = require('./routers/dev/dev2_db_connectDB');
 
 // DEV Routers...
@@ -40,6 +41,9 @@ app.use('/showDevDBEnv1Data', devenv1DBConfDataRoutes);
 app.use('/showDevDBEnv2Data', devenv2DBConfDataRoutes);
 
 // DEV1 ENV CRUD Routers....
+app.get('/getDEV1DBConfig', dev1confdb.getDEV1DBConfig);
+app.post('/insertDEV1DBConfig', dev1confdb.insertDEV1DBConfig);
+app.put('/updateDEV1DBConfig', dev1confdb.updateDEV1DBConfig);
 
 // DEV2 DB CRUD routers...
 app.get('/getDEV2DBConfig', dev2confdb.getDEV2DBConfig);
