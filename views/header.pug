@@ -1,0 +1,81 @@
+- var envName = env.NODE_ENV
+
+if envName==='dev'
+  - var apps1dashboard = 'DEV1 App Dashboard'
+  - var apps2dashboard = 'DEV2 App Dashboard'
+  - var db1dashboard = 'DEV1 DB Dashboard'
+  - var db2dashboard = 'DEV2 DB Dashboard'
+  - var apps1ServiceData = 'DEV1 App Service Configuration'
+  - var apps2ServiceData = 'DEV2 App Service Configuration'
+  - var db1ServiceData = 'DEV1 DB Service Configuration'
+  - var db2ServiceData = 'DEV2 DB Service Configuration'
+  - var dbenv1Url = '/showDevDBEnv1Data'
+  - var dbenv2Url = '/showDevDBEnv2Data'
+  - var appenv1Url = '/showDevAPPEnv1Data'
+  - var appenv2Url = '/showDevAPPEnv2Data'
+  - var unavailableServsUrl = '/unavailableDevServsData'
+  - var appenv1DashboardUrl = '/showDevAPPEnv1DashboardData'
+  - var appenv2DashboardUrl = '/showDevAPPEnv2DashboardData'
+  - var dbenv1DashboardUrl = '/showDevDBEnv1DashboardData'
+  - var dbenv2DashboardUrl = '/showDevDBEnv2DashboardData'
+else if envName==='test'
+  - var apps1dashboard = 'E2E1 App Dashboard'
+  - var apps2dashboard = 'E2E2 App Dashboard'
+  - var db1dashboard = 'E2E1 DB Dashboard'
+  - var db2dashboard = 'E2E2 DB Dashboard'
+  - var apps1ServiceData = 'E2E1 App Service Configuration'
+  - var apps2ServiceData = 'E2E2 App Service Configuration'
+  - var db1ServiceData = 'E2E1 DB Service Configuration'
+  - var db2ServiceData = 'E2E2 DB Service Configuration'
+  - var dbenv1Url = '/showTestDBEnv1Data'
+  - var dbenv2Url = '/showTestDBEnv2Data'
+  - var appenv1Url = '/showTestAPPEnv1Data'
+  - var appenv2Url = '/showTestAPPEnv2Data'
+  - var unavailableServsUrl = '/unavailableTestServsData'
+  - var appenv1DashboardUrl = '/showTestAPPEnv1DashboardData'
+  - var appenv2DashboardUrl = '/showTestAPPEnv2DashboardData'
+  - var dbenv1DashboardUrl = '/showTestDBEnv1DashboardData'
+  - var dbenv2DashboardUrl = '/showTestDBEnv2DashboardData'
+
+nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+   a.navbar-brand(href='#') 
+     img(src='/public/img/dashboard.png', width='135px', height='75px')
+   button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+     span.navbar-toggler-icon
+   .collapse.navbar-collapse(id='navbarSupportedContent')
+     ul.navbar-nav.ml-auto
+       li.nav-item
+         a.nav-link.h4(href='#') #{navbar_title}
+       li.nav-item
+         a.nav-link.h4(href='#') &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       li.nav-item.active
+         a.nav-link.h4.mr-md-2(href='/') Home
+       li.nav-item.dropdown
+         a.nav-link.dropdown-toggle.h4(id='navbarDashboardMenuLink', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Dashboard
+           .dropdown-menu(aria-labelledby='navbarDashboardMenuLink')
+             a.dropdown-item(href=appenv1DashboardUrl) #{apps1dashboard}
+             a.dropdown-item(href=appenv2DashboardUrl) #{apps2dashboard}
+             a.dropdown-item(href=dbenv1DashboardUrl) #{db1dashboard}
+             a.dropdown-item(href=dbenv2DashboardUrl) #{db2dashboard}
+             a.dropdown-item(href='#') Overall Dashboard
+       li.nav-item.dropdown
+         a.nav-link.dropdown-toggle.h4(id='navbarServiceMenuLink', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Service Configuration
+           .dropdown-menu(aria-labelledby='navbarServiceMenuLink')
+             a.dropdown-item(href=appenv1Url) #{apps1ServiceData}
+             a.dropdown-item(href=appenv2Url) #{apps2ServiceData}
+             a.dropdown-item(href=dbenv1Url) #{db1ServiceData}
+             a.dropdown-item(href=dbenv2Url) #{db2ServiceData}
+             a.dropdown-item(href=unavailableServsUrl) Unavailable Service(s)
+       li.nav-item
+         a.nav-link.h4.mr-md-2(href='#', data-toggle='modal', data-target='#aboutModal') About
+
+.modal.fade(id='aboutModal' tabindex='-1' role='dialog' aria-labelledby='aboutModalLabel' aria-hidden='true')
+  .modal-dialog(role='document')
+    .modal-content
+      .modal-header
+        h5.modal-title(id='aboutModalLabel') Environment Management Dashboard.
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') &times;
+      .modal-body Environment Management Dashboard.<br/><br/> Built on NODEJS, Express, REST, Bootstrap, AJAX & Oracle<br/> ©2020 Copyright Reserved SANJIB BEHERA. <br/> Rev 1.0.1
+      .modal-footer
+        footer.btn.btn-secondary(type='button', data-dismiss='modal') Close

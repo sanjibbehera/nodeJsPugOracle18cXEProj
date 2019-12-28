@@ -2,3 +2,17 @@ doctype html
 html
   head
     title #{title}
+    script(src='/public/js/jquery.min.js')
+    script(src='/public/js/popper.min.js')
+    script(src='/public/js/bootstrap.min.js')
+    link(rel='stylesheet', href='/public/css/bootstrap.min.css')
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+
+  body
+    main
+      block header
+        include ../header.pug
+      block content
+        include ../content.pug
+      block footer
+        include ../footer.pug
