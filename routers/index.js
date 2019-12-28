@@ -4,9 +4,7 @@ require('dotenv').config();
 const envName = process.env.NODE_ENV;
 const oracledb = require('oracledb');
 const dbConfig = require('../config/dbConf');
-console.log(envName);
 var Results ="";
-var numRows = 0;
 let connection;
 var resultSetData = {};
 var envData = [];
@@ -87,7 +85,7 @@ router.get('/', function(req, res) {
             //res.redirect('/404');
             res.status(404).end('error');
         } else {
-            console.log('Data sent to Pug: ',envData);
+            //console.log('Data sent to Pug: ',envData);
             res.status(200).send(html);
         }
     });

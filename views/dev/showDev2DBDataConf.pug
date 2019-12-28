@@ -7,7 +7,7 @@ html
     script(src='/public/js/bootstrap.min.js')
     link(rel='stylesheet', href='/public/css/bootstrap.min.css')
     link(rel='stylesheet', href='/public/css/index.css')
-    link(rel='icon', type='image/png', href='/public/img/images.png')
+    link(rel='stylesheet', href='/public/css/fontAwesome.css')
     meta(name="viewport" content="width=device-width, initial-scale=1")
 
   body
@@ -15,6 +15,6 @@ html
       block header
         include ../header.pug
       block content
-        include ../content.pug
+        include dev2DBConfigContent.pug
       block footer
         include ../footer.pug
