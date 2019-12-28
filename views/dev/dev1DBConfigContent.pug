@@ -1,7 +1,12 @@
 doctype html
 html
+  head
+    script(src='/public/js/jquery.slim.min.js')
+    link(rel='stylesheet', href='/public/css/jquery.dataTables.min.css')
+    script(src='/public/js/jquery.dataTables.min.js')
+    script(src='/public/js/pagination.js')
   body
-    table.table-striped.table-bordered
+    table(id='dataTable').datatable.table.table-striped.table-bordered
       thead.table-dark.black.white-text
         tr
           th(scope='col')  #
@@ -12,3 +17,19 @@ html
           th(scope='col')  Database Service Details
           th(scope='col')  Database Package
           th(scope='col')  Service Health
+      tbody
+        each dat, i in db1DataList
+          tr
+            th(scope='row') #{i+1}
+            td  #{dat.application_name}
+            td  #{dat.appl_database_name}
+            td  #{dat.appl_service_name}
+            td  #{dat.appl_service_type}
+            td  #{dat.appl_db_service_details}
+            td  #{dat.appl_db_package_name}
+            if dat.appl_service_status === 'GREEN'
+              td.table-success
+            else if dat.appl_service_status === 'AMBER'
+              td.table-warning
+            else
+              td.table-danger
