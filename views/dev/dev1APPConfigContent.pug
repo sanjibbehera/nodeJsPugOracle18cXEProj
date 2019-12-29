@@ -1,16 +1,39 @@
-table.table.table-striped
-  thead.table-dark.black.white-text
-    tr
-      th(scope='col')  #
-      th(scope='col')  Application Name
-      th(scope='col')  Sub Application Name
-      th(scope='col')  Source Application
-      th(scope='col')  Target Application
-      th(scope='col')  Service Name
-      th(scope='col')  Operation Name
-      th(scope='col')  Service Name Version
-      th(scope='col')  Configuration URL
-      th(scope='col')  Application Package
-      th(scope='col')  Service Type
-      th(scope='col')  Application Support Type
-      th(scope='col')  Service Health
+doctype html
+html
+  head
+    script(src='/public/js/jquery.slim.min.js')
+    link(rel='stylesheet', href='/public/css/jquery.dataTables.min.css')
+    script(src='/public/js/jquery.dataTables.min.js')
+    script(src='/public/js/pagination.js')
+  body
+    table(id='dataTable').datatable.table.table-striped.table-bordered
+      thead.table-dark.black.white-text
+        tr
+          th(scope='col', vertical-align= 'text-top')  #
+          th(scope='col', vertical-align= 'text-top')  Application Name
+          th(scope='col', vertical-align= 'text-top')  Sub Application Name
+          th(scope='col', vertical-align= 'text-top')  Source Application
+          th(scope='col', vertical-align= 'text-top')  Target Application
+          th(scope='col', vertical-align= 'text-top')  Service Name
+          th(scope='col', vertical-align= 'text-top')  Configuration URL
+          th(scope='col', vertical-align= 'text-top')  Application Package
+          th(scope='col', vertical-align= 'text-top')  Service Type
+          th(scope='col', vertical-align= 'text-top')  Service Health
+      tbody
+        each dat, i in app1DataList
+          tr
+            th(scope='row') #{i+1}
+            td  #{dat.application_name}
+            td  #{dat.sub_application_name}
+            td  #{dat.source_application}
+            td  #{dat.target_application}
+            td  #{dat.appl_service_name}
+            td  #{dat.appl_configuration_url}
+            td  #{dat.appl_package_name}
+            td  #{dat.appl_service_type}
+            if dat.appl_service_status === 'GREEN'
+              td.table-success
+            else if dat.appl_service_status === 'AMBER'
+              td.table-warning
+            else
+              td.table-danger

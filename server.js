@@ -35,12 +35,14 @@ var dev1confdb = require('./routers/dev/dev1_db_connectDB');
 var dev1confapp = require('./routers/dev/dev1_app_connectAPP');
 var dev2confdb = require('./routers/dev/dev2_db_connectDB');
 var dev2confapp = require('./routers/dev/dev2_app_connectAPP');
+var showUnavailableServsInDevEnv = require('./routers/dev/showUnavailableServsInDevEnv');
 
 // DEV Routers...
 app.use('/showDevAPPEnv1Data', devenv1APPConfDataRoutes);
 app.use('/showDevAPPEnv2Data', devenv2APPConfDataRoutes);
 app.use('/showDevDBEnv1Data', devenv1DBConfDataRoutes);
 app.use('/showDevDBEnv2Data', devenv2DBConfDataRoutes);
+app.use('/unavailableDevServsData', showUnavailableServsInDevEnv);
 
 // DEV1 ENV CRUD Routers....
 app.get('/getDEV1DBConfig', dev1confdb.getDEV1DBConfig);

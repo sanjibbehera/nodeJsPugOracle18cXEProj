@@ -39,7 +39,7 @@ else if envName==='test'
 
 nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
    a.navbar-brand(href='#') 
-     img(src='/public/img/dashboard.png', width='135px', height='75px')
+     img(src='/public/img/dashboard.png', width='135px', height='60px')
    button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
      span.navbar-toggler-icon
    .collapse.navbar-collapse(id='navbarSupportedContent')
@@ -57,7 +57,6 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
              a.dropdown-item(href=appenv2DashboardUrl) #{apps2dashboard}
              a.dropdown-item(href=dbenv1DashboardUrl) #{db1dashboard}
              a.dropdown-item(href=dbenv2DashboardUrl) #{db2dashboard}
-             a.dropdown-item(href='#') Overall Dashboard
        li.nav-item.dropdown
          a.nav-link.dropdown-toggle.h4(id='navbarServiceMenuLink', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Service Configuration
            .dropdown-menu(aria-labelledby='navbarServiceMenuLink')

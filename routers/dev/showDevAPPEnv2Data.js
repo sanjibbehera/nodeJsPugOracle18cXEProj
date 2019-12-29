@@ -22,7 +22,7 @@ function loadDevAPPEnv2Page(){
     async function run() {
         try{
             connection = await oracledb.getConnection(dbConfig);
-            Results = await connection.execute(`SELECT APPLICATION_NAME, NVL(SUB_APPLICATION_NAME, 'N/A') SUB_APPLICATION_NAME, NVL(SOURCE_APPLICATION, 'N/A') SOURCE_APPLICATION, NVL(TARGET_APPLICATION, 'N/A') TARGET_APPLICATION, APPL_SERVICE_NAME, NVL(APPL_SERVICE_NAME_VERSION, 'N/A') APPL_SERVICE_NAME_VERSION, NVL(APPL_CONFIGURATION_URL, 'N/A') APPL_CONFIGURATION_URL, APPL_PACKAGE_NAME, APPL_SERVICE_TYPE, DECODE(APPL_SERVICE_STATUS, 'CRITICAL', 'RED', 'NORMAL', 'GREEN', 'HIGH', 'AMBER') APPL_SERVICE_STATUS FROM DEV2_CONFIG_DATA ORDER BY ID ASC`,
+            Results = await connection.execute(`SELECT APPLICATION_NAME, NVL(SUB_APPLICATION_NAME, 'N/A') SUB_APPLICATION_NAME, NVL(SOURCE_APPLICATION, 'N/A') SOURCE_APPLICATION, NVL(TARGET_APPLICATION, 'N/A') TARGET_APPLICATION, APPL_SERVICE_NAME, NVL(APPL_CONFIGURATION_URL, 'N/A') APPL_CONFIGURATION_URL, APPL_PACKAGE_NAME, APPL_SERVICE_TYPE, DECODE(APPL_SERVICE_STATUS, 'CRITICAL', 'RED', 'NORMAL', 'GREEN', 'HIGH', 'AMBER') APPL_SERVICE_STATUS FROM DEV2_CONFIG_DATA ORDER BY ID ASC`,
             [], // no bind variables
             {
             resultSet: true // return a ResultSet (default is false)
@@ -37,11 +37,10 @@ function loadDevAPPEnv2Page(){
                     "source_application" : row[2],          //source_application variable
                     "target_application" : row[3],          //target_application variable
                     "appl_service_name" : row[4],           //appl_service_name variable
-                    "appl_service_name_version" : row[5],   //appl_service_name_version variable
-                    "appl_configuration_url" : row[6] ,     //appl_configuration_url variable
-                    "appl_package_name" : row[7],           //appl_package_name variable
-                    "appl_service_type" : row[8],           //appl_package_name variable
-                    "appl_service_status" : row[9]          //appl_package_name variable
+                    "appl_configuration_url" : row[5] ,     //appl_configuration_url variable
+                    "appl_package_name" : row[6],           //appl_package_name variable
+                    "appl_service_type" : row[7],           //appl_service_type variable
+                    "appl_service_status" : row[8]          //appl_service_status variable
                 };
                 env2appData.push(resultSetData);
             }      
