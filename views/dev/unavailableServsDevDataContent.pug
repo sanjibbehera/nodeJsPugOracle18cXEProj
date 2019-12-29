@@ -7,103 +7,114 @@
 - var apps2unavailableWSServs = 'DEV2 Application Unavailable Webservices'
 - var dbs1unavailableServs = 'DEV1 Database Unavailable Services'
 - var dbs2unavailableServs = 'DEV2 Database Unavailable Services'
-- var iter = 2
-- var perct = 0
-- var divs = 0
 
 .row
   .col-lg-11.col-md-4
-    .card.mw-100(style='height:280px')
-      center.card-header #{overallServiceMonitoring}
+    .card.mw-100(style='height:265px;')
+      center.card-header #[strong #{overallServiceMonitoring} ]
         table.card-table.table
           tr
             each data, i in overallDataList
               if data.tab_name==='DEV2_DB_CONFIG_DATA_TOTSRV'
-                td Total DEV2 DB Services Monitored
-                td #{data.counter}
+                td #[strong Total DEV2 DB Services Monitored]
+                td #[strong #{data.counter}]
               else if data.tab_name==='DEV2_CONFIG_DATA_TOTSRV'
-                td Total DEV2 App Processes Services Monitored
-                td #{data.counter}
+                td #[strong Total DEV2 App Processes Services Monitored]
+                td #[strong #{data.counter}]
               else if data.tab_name==='DEV2_WS_CONFIG_DATA_TOTSRV'
-                td Total DEV2 App Websevices Monitored
-                td #{data.counter}
+                td #[strong Total DEV2 App Websevices Monitored]
+                td #[strong #{data.counter}]
           tr
             each datas, i in overallDataList
               if datas.tab_name==='DEV2_DB_CONFIG_DATA_UNAVSRV'
-                td Unavailable DEV2 DB Services
-                td #{datas.counter}
+                td #[strong Unavailable DEV2 DB Services]
+                td #[strong #{datas.counter}]
               else if datas.tab_name==='DEV2_CONFIG_DATA_UNAVSRV'
-                td Unavailable DEV2 App Services
-                td #{datas.counter}
+                td #[strong Unavailable DEV2 App Services]
+                td #[strong #{datas.counter}]
               else if datas.tab_name==='DEV2_WS_CONFIG_DATA_TOTSRV'
-                td Unavailable DEV2 Webservices
-                td #{datas.counter}
+                td #[strong Unavailable DEV2 Webservices]
+                td #[strong #{datas.counter}]
           tr
             each dat, i in overallDataList
               if dat.tab_name==='DEV1_DB_CONFIG_DATA_TOTSRV'
-                td Total DEV1 DB Services Monitored
-                td #{dat.counter}
+                td #[strong Total DEV1 DB Services Monitored]
+                td #[strong #{dat.counter}]
               else if dat.tab_name==='DEV1_CONFIG_DATA_TOTSRV'
-                td Total DEV1 App Processes Services Monitored
-                td #{dat.counter}
+                td #[strong Total DEV1 App Processes Services Monitored]
+                td #[strong #{dat.counter}]
               else if dat.tab_name==='DEV1_WS_CONFIG_DATA_TOTSRV'
-                td Total DEV1 App Websevices Monitored
-                td #{dat.counter}
+                td #[strong Total DEV1 App Websevices Monitored]
+                td #[strong #{dat.counter}]
           tr
             each data, i in overallDataList
               if data.tab_name==='DEV1_DB_CONFIG_DATA_UNAVSRV'
-                td Unavailable DEV1 DB Services
-                td #{data.counter}
+                td #[strong Unavailable DEV1 DB Services]
+                td #[strong #{data.counter}]
               else if data.tab_name==='DEV1_CONFIG_DATA_UNAVSRV'
-                td TotaUnavailablel DEV1 App Processes Services
-                td #{data.counter}
+                td #[strong Unavailablel DEV1 App Processes Services]
+                td #[strong #{data.counter}]
               else if data.tab_name==='DEV1_WS_CONFIG_DATA_UNAVSRV'
-                td Unavailable DEV1 App Websevices
-                td #{data.counter}
+                td #[strong Unavailable DEV1 App Websevices]
+                td #[strong #{data.counter}]
           
   .col-lg-4.col-md-3
     .card.mw-90.p-1
-      center.card-header #{dbs2unavailableServs}
-        div.scrollable
-          table.card-table.table
-            each data, i in unavailableDev2DBDataList
-              tr
-                if data.tab_name==='DEV1_DB_CONFIG_DATA_TOTSRV'
-                  td Total Services
-                td #{data.appl_service_name}
+      each data, i in overallDataList
+        if data.tab_name==='DEV2_DB_CONFIG_DATA_UNAVSRV'
+          center.card-header #[strong #{dbs2unavailableServs}  Count: #{data.counter}]
+            div.scrollable
+              table.card-table.table
+                each data, i in unavailableDev2DBDataList
+                  tr
+                    td #{data.appl_service_name}
   .col-lg-4.col-md-3
     .card.mw-90.p-1
-      center.card-header #{apps2unavailableServs}
-        table.card-table.table
-          each data, i in unavailableDev2APPDataList
-            tr
-              td #{data.appl_service_name}
+      each data, i in overallDataList
+        if data.tab_name==='DEV2_CONFIG_DATA_UNAVSRV'
+          center.card-header #[strong #{apps2unavailableServs} Count: #{data.counter}]
+            div.scrollable
+              table.card-table.table
+                each data, i in unavailableDev2DBDataList
+                  tr
+                    td #{data.appl_service_name}
   .col-lg-4.col-md-3
     .card.mw-90.p-1
-      center.card-header #{apps2unavailableWSServs}
-        table.card-table.table
-          each data, i in unavailableDev2APPWSDataList
-            tr
-              td #{data.appl_service_name}
+      each data, i in overallDataList
+        if data.tab_name==='DEV2_WS_CONFIG_DATA_UNAVSRV'
+          center.card-header #[strong #{apps2unavailableWSServs} Count: #{data.counter}]
+            div.scrollable
+              table.card-table.table
+                each data, i in unavailableDev2DBDataList
+                  tr
+                    td #{data.appl_service_name}
   .col-lg-4.col-md-3
     .card.mw-90.p-1
-      center.card-header #{dbs1unavailableServs}
-        div.scrollable
-          table.card-table.table
-            each data, i in unavailableDev1DBDataList
-              tr
-                td #{data.appl_service_name}
+      each data, i in overallDataList
+        if data.tab_name==='DEV1_DB_CONFIG_DATA_UNAVSRV'
+          center.card-header #[strong #{dbs1unavailableServs} Count: #{data.counter}]
+            div.scrollable
+              table.card-table.table
+                each data, i in unavailableDev1DBDataList
+                  tr
+                    td #{data.appl_service_name}
   .col-lg-4.col-md-3
     .card.mw-90.p-1
-      center.card-header #{apps1unavailableServs}
-        table.card-table.table
-          each data, i in unavailableDev1APPDataList
-            tr
-              td #{data.appl_service_name}
+      each data, i in overallDataList
+        if data.tab_name==='DEV1_CONFIG_DATA_UNAVSRV'
+          center.card-header #[strong #{apps1unavailableServs} Count: #{data.counter}]
+            div.scrollable
+              table.card-table.table
+                each data, i in unavailableDev1DBDataList
+                  tr
+                    td #{data.appl_service_name}
   .col-lg-4.col-md-3
     .card.mw-90.p-1
-      center.card-header #{apps1unavailableWSServs}
-        table.card-table.table
-          each data, i in unavailableDev1APPWSDataList
-            tr
-              td #{data.appl_service_name}
+      each data, i in overallDataList
+        if data.tab_name==='DEV1_WS_CONFIG_DATA_UNAVSRV'
+          center.card-header #[strong #{apps1unavailableWSServs} Count: #{data.counter}]
+            div.scrollable
+              table.card-table.table
+                each data, i in unavailableDev1DBDataList
+                  tr
+                    td #{data.appl_service_name}

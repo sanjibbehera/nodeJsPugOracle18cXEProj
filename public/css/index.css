@@ -11,15 +11,19 @@ footer {
   }
 
 .card-header {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+}
+
+.card-table {
+  font-size: 1rem;
 }
 
 .card:not(:first-child) {
-  height: 320px;
+  height: 300px;
   margin: 6px auto;
 }
 
 .scrollable{
   overflow-y: auto;
-  max-height: 260px;
+  max-height: 240px;
 }
