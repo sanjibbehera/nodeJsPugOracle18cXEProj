@@ -23,38 +23,33 @@ br
           tr
             th(scope='row') Monitored Applications
             each dat, i in contentList
-              if dat.environment_name==='DEV1'
+              if dat.environment_name==='DEV1' || dat.environment_name==='E2E1'
                 td(align='right') #{dat.mon_appl_cntr}
-              else if dat.environment_name==='E2E1'
-                td(align='right') #{dat.mon_appl_cntr}
+                - break
           tr
             th(scope='row') No of Application Processes Monitored
             each dat, i in contentList
-              if dat.environment_name==='DEV1_AV_PROC'
+              if dat.environment_name==='DEV1_AV_PROC' || dat.environment_name==='E2E1_AV_PROC'
                 td(align='right') #{dat.mon_appl_cntr}
-              else if dat.environment_name==='E2E1_AV_PROC'
-                td(align='right') #{dat.mon_appl_cntr}
+                - break
           tr
             th(scope='row') No of Application Webservices Monitored
             each dat, i in contentList
-              if dat.environment_name==='DEV1_AV_WEB'
+              if dat.environment_name==='DEV1_AV_WEB' || dat.environment_name==='E2E1_AV_WEB'
                 td(align='right') #{dat.mon_appl_cntr}
-              else if dat.environment_name==='E2E1_AV_WEB'
-                td(align='right') #{dat.mon_appl_cntr}
+                - break
           tr
             th(scope='row') No of Application GUIservices Monitored
             each dat, i in contentList
-              if dat.environment_name==='DEV1_AV_GUI'
+              if dat.environment_name==='DEV1_AV_GUI' || dat.environment_name==='E2E1_AV_GUI'
                 td(align='right') #{dat.mon_appl_cntr}
-              else if dat.environment_name==='E2E1_AV_GUI'
-                td(align='right') #{dat.mon_appl_cntr}
+                - break
           tr
             th(scope='row') Unavailable Services
             each dat, i in contentList
-              if dat.environment_name==='DEV2_UNAV_APP'
+              if dat.environment_name==='DEV1_UNAV_APP' || dat.environment_name==='E2E1_UNAV_APP'
                 td(align='right') #{dat.mon_appl_cntr}
-              else if dat.environment_name==='E2E2_UNAV_APP'
-                td(align='right') #{dat.mon_appl_cntr}
+                - break
   .col-lg-5.col-md-4
     .card.h-90
       center.card-header #{apps2overview}
@@ -62,38 +57,33 @@ br
           tr
             th(scope='row') Monitored Applications
             each dat, i in contentList
-              if dat.environment_name==='DEV2'
+              if dat.environment_name==='DEV2' || dat.environment_name==='E2E2'
                 td(align='right') #{dat.mon_appl_cntr}
-              else if dat.environment_name==='E2E2'
-                td(align='right') #{dat.mon_appl_cntr}
+                - break
           tr
             th(scope='row') No of Application Processes Monitored
             each dat, i in contentList
-              if dat.environment_name==='DEV2_AV_PROC'
+              if dat.environment_name==='DEV2_AV_PROC' || dat.environment_name==='E2E2_AV_PROC'
                 td(align='right') #{dat.mon_appl_cntr}
-              else if dat.environment_name==='E2E2_AV_PROC'
-                td(align='right') #{dat.mon_appl_cntr}
+                - break
           tr
             th(scope='row') No of Application Webservices Monitored
             each dat, i in contentList
-              if dat.environment_name==='DEV2_AV_WEB'
+              if dat.environment_name==='DEV2_AV_WEB' || dat.environment_name==='E2E2_AV_WEB'
                 td(align='right') #{dat.mon_appl_cntr}
-              else if dat.environment_name==='E2E2_AV_WEB'
-                td(align='right') #{dat.mon_appl_cntr}
+                - break
           tr
             th(scope='row') No of Application GUIservices Monitored
             each dat, i in contentList
-              if dat.environment_name==='DEV2_AV_GUI'
+              if dat.environment_name==='DEV2_AV_GUI' || dat.environment_name==='E2E2_AV_GUI'
                 td(align='right') #{dat.mon_appl_cntr}
-              else if dat.environment_name==='E2E2_AV_GUI'
-                td(align='right') #{dat.mon_appl_cntr}
+                - break
           tr
             th(scope='row') Unavailable Services
             each dat, i in contentList
-              if dat.environment_name==='DEV2_UNAV_APP'
+              if dat.environment_name==='DEV2_UNAV_APP' || dat.environment_name==='E2E2_UNAV_APP'
                 td(align='right') #{dat.mon_appl_cntr}
-              else if dat.environment_name==='E2E2_UNAV_APP'
-                td(align='right') #{dat.mon_appl_cntr}
+                - break
   .col-lg-5.col-md-4
     .card.h-90
       center.card-header #{db1overview}
@@ -101,31 +91,27 @@ br
           tr
             th(scope='row') Monitored DBs
             each dat, i in contentList
-              if dat.environment_name==='DEV1 DB'
+              if dat.environment_name==='DEV1 DB' || dat.environment_name==='E2E1 DB'
                 td(align='right') #{dat.mon_appl_cntr}
-              else if dat.environment_name==='E2E1 DB'
-                td(align='right') #{dat.mon_appl_cntr}
+                - break
           tr
             th(scope='row') No of DB Processes Monitored
             each dat, i in contentList
-              if dat.environment_name==='DEV1_SERVTYP_DB'
+              if dat.environment_name==='DEV1_SERVTYP_DB' || dat.environment_name==='E2E1_SERVTYP_DB'
                 td(align='right') #{dat.mon_appl_cntr}
-              else if dat.environment_name==='E2E1_SERVTYP_DB'
-                td(align='right') #{dat.mon_appl_cntr}
+                - break
           tr
             th(scope='row') No of GG Processes Monitored
             each dat, i in contentList
-              if dat.environment_name==='DEV1_SERVTYP_GG'
+              if dat.environment_name==='DEV1_SERVTYP_GG' || dat.environment_name==='E2E1_SERVTYP_GG'
                 td(align='right') #{dat.mon_appl_cntr}
-              else if dat.environment_name==='E2E1_SERVTYP_GG'
-                td(align='right') #{dat.mon_appl_cntr}
+                - break
           tr
             th(scope='row') Unavailable DB Services
             each dat, i in contentList
-              if dat.environment_name==='DEV1_UNAV_DB'
+              if dat.environment_name==='DEV1_UNAV_DB' || dat.environment_name==='E2E1_UNAV_DB'
                 td(align='right') #{dat.mon_appl_cntr}
-              else if dat.environment_name==='E2E1_UNAV_DB'
-                td(align='right') #{dat.mon_appl_cntr}
+                - break
   .col-lg-5.col-md-4
     .card.h-90
       center.card-header #{db2overview}
@@ -133,28 +119,20 @@ br
           tr
             th(scope='row') Monitored DBs
             each dat, i in contentList
-              if dat.environment_name==='DEV2 DB'
-                td(align='right') #{dat.mon_appl_cntr}
-              else if dat.environment_name==='E2E2 DB'
+              if dat.environment_name==='DEV2 DB' || dat.environment_name==='E2E2 DB'
                 td(align='right') #{dat.mon_appl_cntr}
           tr
             th(scope='row') No of DB Processes Monitored
             each dat, i in contentList
-              if dat.environment_name==='DEV2_SERVTYP_DB'
-                td(align='right') #{dat.mon_appl_cntr}
-              else if dat.environment_name==='E2E2_SERVTYP_DB'
+              if dat.environment_name==='DEV2_SERVTYP_DB' || dat.environment_name==='E2E2_SERVTYP_DB'
                 td(align='right') #{dat.mon_appl_cntr}
           tr
             th(scope='row') No of GG Processes Monitored
             each dat, i in contentList
-              if dat.environment_name==='DEV2_SERVTYP_GG'
-                td(align='right') #{dat.mon_appl_cntr}
-              else if dat.environment_name==='E2E2_SERVTYP_GG'
+              if dat.environment_name==='DEV2_SERVTYP_GG' || dat.environment_name==='E2E2_SERVTYP_GG'
                 td(align='right') #{dat.mon_appl_cntr}
           tr
             th(scope='row') Unavailable DB Services
             each dat, i in contentList
-              if dat.environment_name==='DEV2_UNAV_DB'
-                td(align='right') #{dat.mon_appl_cntr}
-              else if dat.environment_name==='E2E2_UNAV_DB'
+              if dat.environment_name==='DEV2_UNAV_DB' || dat.environment_name==='E2E2_UNAV_DB'
                 td(align='right') #{dat.mon_appl_cntr}

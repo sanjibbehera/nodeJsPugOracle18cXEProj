@@ -14,51 +14,60 @@ options = {
     // extendedMetaData: true,   // get extra metadata
     // fetchArraySize: 100       // internal buffer allocation size for tuning
 };
-run();
 
-async function run() {
-    try{
-        connection = await oracledb.getConnection(dbConfig);
-        Results = await connection.execute(`SELECT APPLICATION_NAME, APPL_DATABASE_NAME, APPL_SERVICE_NAME, APPL_DB_SERVICE_DETAILS, APPL_DB_PACKAGE_NAME, APPL_SERVICE_TYPE, DECODE(APPL_SERVICE_STATUS, 'CRITICAL', 'RED', 'NORMAL', 'GREEN', 'HIGH', 'AMBER') APPL_SERVICE_STATUS FROM DEV2_DB_CONFIG_DATA ORDER BY ID ASC`,
-        [], // no bind variables
-        {
-          resultSet: true // return a ResultSet (default is false)
+function loadDevDBEnv2Page(){
+    db2appData = [];
+    run();
+
+    async function run() {
+        try{
+            connection = await oracledb.getConnection(dbConfig);
+            Results = await connection.execute(`SELECT APPLICATION_NAME, APPL_DATABASE_NAME, APPL_SERVICE_NAME, APPL_DB_SERVICE_DETAILS, APPL_DB_PACKAGE_NAME, APPL_SERVICE_TYPE, DECODE(APPL_SERVICE_STATUS, 'CRITICAL', 'RED', 'NORMAL', 'GREEN', 'HIGH', 'AMBER') APPL_SERVICE_STATUS FROM DEV2_DB_CONFIG_DATA ORDER BY ID ASC`,
+            [], // no bind variables
+            {
+            resultSet: true // return a ResultSet (default is false)
+            });
+            const rs = Results.resultSet;
+            let row;
+
+            while ((row = await rs.getRow())) {
+                resultSetData = {
+                    "application_name" : row[0],            //application_name variable
+                    "appl_database_name" : row[1],          //appl_database_name variable
+                    "appl_service_name" : row[2],           //appl_service_name variable
+                    "appl_db_service_details" : row[3],     //appl_db_service_details variable
+                    "appl_db_package_name" : row[4],        //appl_package_name variable
+                    "appl_service_type" : row[5],           //appl_package_name variable
+                    "appl_service_status" : row[6]          //appl_package_name variable
+                };
+                db2appData.push(resultSetData);
+            }      
+            // always close the ResultSet
+            await rs.close();
+        }
+        catch(error){
+            console.error(error);
+        }
+    }
+
+    router.get('/', function(req, res) {
+        res.render('dev/showDev2DBDataConf', {title: 'Environment Management Dashboard', navbar_title: 'Welcome to Environment Configuration Managed System',
+        db2DataList: db2appData}, function(err, html) {
+            if (err) {
+                //res.redirect('/404');
+                res.status(404).end('error');
+            } else {
+                res.status(200).send(html);
+            }
         });
-        const rs = Results.resultSet;
-        let row;
-
-        while ((row = await rs.getRow())) {
-            resultSetData = {
-                "application_name" : row[0],            //application_name variable
-                "appl_database_name" : row[1],          //appl_database_name variable
-                "appl_service_name" : row[2],           //appl_service_name variable
-                "appl_db_service_details" : row[3],     //appl_db_service_details variable
-                "appl_db_package_name" : row[4],        //appl_package_name variable
-                "appl_service_type" : row[5],           //appl_package_name variable
-                "appl_service_status" : row[6]          //appl_package_name variable
-            };
-            db2appData.push(resultSetData);
-          }      
-          // always close the ResultSet
-          await rs.close();
-    }
-    catch(error){
-        console.error(error);
-    }
+    });
 }
 
-router.get('/', function(req, res) {
-    res.render('dev/showDev2DBDataConf', {title: 'Environment Management Dashboard', navbar_title: 'Welcome to Environment Configuration Managed System',
-    db2DataList: db2appData}, function(err, html) {
-        if (err) {
-            //res.redirect('/404');
-            res.status(404).end('error');
-        } else {
-            console.log(db2appData);
-            res.status(200).send(html);
-        }
-    });
-  });
+loadDevDBEnv2Page();
+
+setInterval(function(){
+    loadDevDBEnv2Page() // this will run after every 120 seconds
+}, 120000);
 
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const oracledb = require('oracledb');
 const dbConfig = require('../../config/dbConf');
-var Results ="";
+var Results = "";
 let connection;
 var resultSetData = {};
 var fetchEnvDBData = [];
@@ -18,7 +18,6 @@ const getDEV2DBConfig = (request, response) => {
             const rs = Results.resultSet;
             let row;
             while ((row = await rs.getRow())) {
-                //console.log(row);
                 resultSetData = {
                     "application_name" : row[0],            //application_name variable
                     "appl_database_name" : row[1],          //appl_database_name variable
@@ -29,15 +28,16 @@ const getDEV2DBConfig = (request, response) => {
                     "appl_service_status" : row[6]          //appl_service_status variable
                 };
                 fetchEnvDBData.push(resultSetData);
-              }      
-              // always close the ResultSet
-              await rs.close();
+            }
+            // always close the ResultSet
+            await rs.close();
         }
         catch(err){
             console.error(err);
         }
     }
     response.json(fetchEnvDBData);
+    //response.status(200).send(`data sent back:-`,resultSetData)
 };
 
 const insertDEV2DBConfig = (request, response) => {
