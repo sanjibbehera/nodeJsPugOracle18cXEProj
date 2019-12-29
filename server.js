@@ -45,10 +45,12 @@ app.use('/showDevDBEnv2Data', devenv2DBConfDataRoutes);
 app.get('/getDEV1DBConfig', dev1confdb.getDEV1DBConfig);
 app.post('/insertDEV1DBConfig', dev1confdb.insertDEV1DBConfig);
 app.put('/updateDEV1DBConfig', dev1confdb.updateDEV1DBConfig);
+app.delete('/deleteDEV1DBConfigById', dev1confdb.deleteDEV1DBConfigById);
 
 // DEV2 DB CRUD routers...
 app.get('/getDEV2DBConfig', dev2confdb.getDEV2DBConfig);
 app.post('/insertDEV2DBConfig', dev2confdb.insertDEV2DBConfig);
 app.put('/updateDEV2DBConfig', dev2confdb.updateDEV2DBConfig);
+app.delete('/deleteDEV2DBConfigById', dev2confdb.deleteDEV2DBConfigById);
 
 app.listen(port, () => console.log(`Env Mgmt Dashboard App listening on port ${port}!`));

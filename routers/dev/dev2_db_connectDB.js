@@ -90,8 +90,32 @@ const updateDEV2DBConfig = (request, response) => {
     }
 }
 
+const deleteDEV2DBConfigById = (request, response) => {
+    const { id } = request.body;
+    var Id = parseInt(id);
+    const deleteSqlQuery = 'DELETE FROM DEV2_db_config_data WHERE id = :id';
+    run();
+    async function run() {
+        try{
+            connection = await oracledb.getConnection(dbConfig);
+            Results = await connection.execute(
+                deleteSqlQuery,
+                {
+                    id: Id
+                },
+                { autoCommit: true }
+            );
+        }
+        catch(err){
+            console.error(err);
+        }
+        response.status(200).send(`Entry from Table DEV2_db_config_data deleted with ID: ${id}`)
+    }
+}
+
 module.exports = {
     getDEV2DBConfig,
     insertDEV2DBConfig,
-    updateDEV2DBConfig
+    updateDEV2DBConfig,
+    deleteDEV2DBConfigById
 }
