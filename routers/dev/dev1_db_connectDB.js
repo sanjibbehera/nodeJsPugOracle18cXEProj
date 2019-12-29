@@ -60,9 +60,9 @@ const insertDEV1DBConfig = (request, response) => {
 };
 
 const updateDEV1DBConfig = (request, response) => {
-    const id = parseInt(request.params.id);
-    const {application_name, appl_database_name, appl_service_name, appl_service_type, appl_service_status, appl_db_service_details, appl_db_package_name, info_entrydate } = request.body;
-    const updateSqlQuery = 'UPDATE DEV1_db_config_data SET application_name = :application_name, appl_database_name = :appl_database_name, appl_service_name = :appl_service_name, appl_service_type = :appl_service_type, appl_service_status = :appl_service_status, appl_db_service_details = :appl_db_service_details, appl_db_package_name = :appl_db_package_name, info_entrydate= to_date(:info_entrydate, \'DD-MM-YYYY\') WHERE id = :id';
+    const {application_name, appl_database_name, appl_service_name, appl_service_type, appl_service_status, appl_db_service_details, appl_db_package_name, info_entrydate, id } = request.body;
+    var Id = parseInt(id);
+    const updateSqlQuery = 'UPDATE DEV1_db_config_data SET application_name = :appl_name, appl_database_name = :appl_db_name, appl_service_name = :appl_srv_name, appl_service_type = :appl_srv_type, appl_service_status = :appl_srv_status, appl_db_service_details = :appl_db_srv_details, appl_db_package_name = :appl_db_pkg_name, info_entrydate= to_date(:info_entrydate, \'DD-MM-YYYY\') WHERE id = :id';
     run();
     async function run() {
         try{
@@ -70,15 +70,15 @@ const updateDEV1DBConfig = (request, response) => {
             Results = await connection.execute(
                 updateSqlQuery,
                 {
-                    application_name: application_name,
-                    appl_database_name: appl_database_name,
-                    appl_service_name: appl_service_name,
-                    appl_service_type: appl_service_type,
-                    appl_service_status: appl_service_status,
-                    appl_db_service_details: appl_db_service_details,
-                    appl_db_package_name: appl_db_package_name,
+                    appl_name: application_name,
+                    appl_db_name: appl_database_name,
+                    appl_srv_name: appl_service_name,
+                    appl_srv_type: appl_service_type,
+                    appl_srv_status: appl_service_status,
+                    appl_db_srv_details: appl_db_service_details,
+                    appl_db_pkg_name: appl_db_package_name,
                     info_entrydate: info_entrydate,
-                    id: id
+                    id: Id
                 },
                 { autoCommit: true }
             );
@@ -86,6 +86,7 @@ const updateDEV1DBConfig = (request, response) => {
         catch(err){
             console.error(err);
         }
+        response.status(200).send(`Table DEV1_db_config_data modified with ID: ${id}`)
     }
 }
 
