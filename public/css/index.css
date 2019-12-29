@@ -19,8 +19,7 @@ footer {
 }
 
 .card:not(:first-child) {
-  height: 300px;
-  margin: 6px auto;
+  margin: 15px auto;
 }
 
 .scrollable{
