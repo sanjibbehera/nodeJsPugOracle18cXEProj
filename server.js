@@ -7,6 +7,7 @@ const app = express();
 var path = require('path');
 const port = process.env.PORTNO;
 const envName = process.env.NODE_ENV;
+const axios = require('axios');
 
 // Combines logging info from request and response
 app.use(logger('combined'));
