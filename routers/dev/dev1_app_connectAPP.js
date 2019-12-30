@@ -36,7 +36,15 @@ const getDEV1APPConfig = (request, response) => {
         }
         catch(err){
             console.error(err);
-        }
+        } finally {
+            if (connection) {
+              try {
+                await connection.close();
+              } catch (err) {
+                console.error(err);
+              }
+            }
+          }
     }
     response.json(fetchEnvAPPData);
 };
@@ -55,7 +63,15 @@ const insertDEV1APPConfig = (request, response) => {
         }
         catch(err){
             console.error(err);
-        }
+        }finally {
+            if (connection) {
+              try {
+                await connection.close();
+              } catch (err) {
+                console.error(err);
+              }
+            }
+          }
     }
     response.status(201).send(`New Entry in the Table DEV2_CONFIG_DATA added.`)
 };
@@ -87,7 +103,15 @@ const updateDEV1APPConfig = (request, response) => {
         }
         catch(err){
             console.error(err);
-        }
+        } finally {
+            if (connection) {
+              try {
+                await connection.close();
+              } catch (err) {
+                console.error(err);
+              }
+            }
+          }
         response.status(200).send(`Table DEV2_CONFIG_DATA modified with ID: ${id}`)
     }
 }
@@ -110,7 +134,15 @@ const deleteDEV1APPConfigById = (request, response) => {
         }
         catch(err){
             console.error(err);
-        }
+        } finally {
+            if (connection) {
+              try {
+                await connection.close();
+              } catch (err) {
+                console.error(err);
+              }
+            }
+          }
         response.status(200).send(`Entry from Table DEV1_CONFIG_DATA deleted with ID: ${id}`)
     }
 }

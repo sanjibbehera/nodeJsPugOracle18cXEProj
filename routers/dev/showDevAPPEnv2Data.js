@@ -49,7 +49,15 @@ function loadDevAPPEnv2Page(){
         }
         catch(error){
             console.error(error);
-        }
+        } finally {
+            if (connection) {
+              try {
+                await connection.close();
+              } catch (err) {
+                console.error(err);
+              }
+            }
+          }
     }
 
     router.get('/', function(req, res) {

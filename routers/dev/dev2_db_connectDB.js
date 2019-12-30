@@ -34,9 +34,17 @@ const getDEV2DBConfig = (request, response) => {
         }
         catch(err){
             console.error(err);
-        }
+        } finally {
+            if (connection) {
+              try {
+                await connection.close();
+              } catch (err) {
+                console.error(err);
+              }
+            }
+          }
+          response.json(fetchEnvDBData);
     }
-    response.json(fetchEnvDBData);
     //response.status(200).send(`data sent back:-`,resultSetData)
 };
 
@@ -54,7 +62,15 @@ const insertDEV2DBConfig = (request, response) => {
         }
         catch(err){
             console.error(err);
-        }
+        } finally {
+            if (connection) {
+              try {
+                await connection.close();
+              } catch (err) {
+                console.error(err);
+              }
+            }
+          }
     }
     response.status(201).send(`New Entry in the Table DEV2_db_config_data added.`)
 };
@@ -85,7 +101,15 @@ const updateDEV2DBConfig = (request, response) => {
         }
         catch(err){
             console.error(err);
-        }
+        } finally {
+            if (connection) {
+              try {
+                await connection.close();
+              } catch (err) {
+                console.error(err);
+              }
+            }
+          }
         response.status(200).send(`Table DEV2_db_config_data modified with ID: ${id}`)
     }
 }
@@ -108,7 +132,15 @@ const deleteDEV2DBConfigById = (request, response) => {
         }
         catch(err){
             console.error(err);
-        }
+        } finally {
+            if (connection) {
+              try {
+                await connection.close();
+              } catch (err) {
+                console.error(err);
+              }
+            }
+          }
         response.status(200).send(`Entry from Table DEV2_db_config_data deleted with ID: ${id}`)
     }
 }

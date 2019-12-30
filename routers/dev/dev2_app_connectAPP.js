@@ -36,9 +36,17 @@ const getDEV2APPConfig = (request, response) => {
         }
         catch(err){
             console.error(err);
-        }
+        } finally {
+            if (connection) {
+              try {
+                await connection.close();
+              } catch (err) {
+                console.error(err);
+              }
+            }
+          }
+          response.json(fetchEnvAPPData);
     }
-    response.json(fetchEnvAPPData);
 };
 
 const insertDEV2APPConfig = (request, response) => {
@@ -55,7 +63,15 @@ const insertDEV2APPConfig = (request, response) => {
         }
         catch(err){
             console.error(err);
-        }
+        } finally {
+            if (connection) {
+              try {
+                await connection.close();
+              } catch (err) {
+                console.error(err);
+              }
+            }
+          }
     }
     response.status(201).send(`New Entry in the Table DEV2_CONFIG_DATA added.`)
 };
@@ -87,7 +103,15 @@ const updateDEV2APPConfig = (request, response) => {
         }
         catch(err){
             console.error(err);
-        }
+        } finally {
+            if (connection) {
+              try {
+                await connection.close();
+              } catch (err) {
+                console.error(err);
+              }
+            }
+          }
         response.status(200).send(`Table DEV2_CONFIG_DATA modified with ID: ${id}`)
     }
 }
@@ -110,7 +134,15 @@ const deleteDEV2APPConfigById = (request, response) => {
         }
         catch(err){
             console.error(err);
-        }
+        } finally {
+            if (connection) {
+              try {
+                await connection.close();
+              } catch (err) {
+                console.error(err);
+              }
+            }
+          }
         response.status(200).send(`Entry from Table DEV2_CONFIG_DATA deleted with ID: ${id}`)
     }
 }

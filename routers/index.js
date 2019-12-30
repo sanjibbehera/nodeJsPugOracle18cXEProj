@@ -45,7 +45,15 @@ function loadPage(){
             }
             catch(err){
                 console.error(err);
-            }
+            } finally {
+                if (connection) {
+                  try {
+                    await connection.close();
+                  } catch (err) {
+                    console.error(err);
+                  }
+                }
+              }
         }
     }
     else if(envName==='test'){
@@ -75,7 +83,15 @@ function loadPage(){
             }
             catch(err){
                 console.error(err);
-            }
+            } finally {
+                if (connection) {
+                  try {
+                    await connection.close();
+                  } catch (err) {
+                    console.error(err);
+                  }
+                }
+              }
         }
     }
     
