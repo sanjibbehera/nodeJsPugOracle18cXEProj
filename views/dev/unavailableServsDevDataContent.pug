@@ -67,7 +67,7 @@
               table.card-table.table
                 each data, i in unavailableDev2DBDataList
                   tr
-                    td #{data.appl_service_name}
+                    td(onclick='alertAJAXMsg("' + data.application_name + '", "' + data.appl_service_name + '")') #{data.appl_service_name}
   .col-lg-4.col-md-3
     .card.mw-90.p-1
       each data, i in overallDataList

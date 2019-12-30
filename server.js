@@ -26,9 +26,13 @@ var devenv1APPConfDataRoutes = require('./routers/dev/showDevAPPEnv1Data');
 var devenv2APPConfDataRoutes = require('./routers/dev/showDevAPPEnv2Data');
 var devenv1DBConfDataRoutes = require('./routers/dev/showDevDBEnv1Data');
 var devenv2DBConfDataRoutes = require('./routers/dev/showDevDBEnv2Data');
+var findIssuesFromDB = require('./routers/findIssuesFromDB');
 
 // Main Page Router..
 app.use('/', mainPageRoutes);
+
+// AJAX Call...
+app.get('/get_data_from_DB', findIssuesFromDB.get_data_from_DB);
 
 // For Dev Envs..
 var dev1confdb = require('./routers/dev/dev1_db_connectDB');
