@@ -6,11 +6,13 @@ if envName==='dev'
   - var apps2overview = 'DEV2 Application Overview'
   - var db1overview = 'DEV1 DB Overview'
   - var db2overview = 'DEV2 DB Overview'
+  - var unavailableDevServsUrl = '/unavailableDevServsData'
 else if envName==='test'
   - var apps1overview = 'E2E1 Application Overview'
   - var apps2overview = 'E2E2 Application Overview'
   - var db1overview = 'E2E1 DB Overview'
   - var db2overview = 'E2E2 DB Overview'
+  - var unavailableTestServsUrl = '/unavailableTestServsData'
 
 - contentList = typeof(envDataList) != 'undefined' ? envDataList : { }
 
@@ -47,7 +49,18 @@ br
           tr
             th(scope='row') Unavailable Services
             each dat, i in contentList
-              if dat.environment_name==='DEV1_UNAV_APP' || dat.environment_name==='E2E1_UNAV_APP'
+              if dat.environment_name==='DEV1_UNAV_APP' && (dat.mon_appl_cntr>0)
+                td(align='right') 
+                  a(href=unavailableDevServsUrl) #{dat.mon_appl_cntr}
+                  - break
+              else if dat.environment_name==='DEV1_UNAV_APP' && (dat.mon_appl_cntr==0)
+                td(align='right') #{dat.mon_appl_cntr}
+                - break
+              else if dat.environment_name==='E2E1_UNAV_APP' && (dat.mon_appl_cntr>0)
+                td(align='right') 
+                  a(href=unavailableTestServsUrl) #{dat.mon_appl_cntr}
+                  - break
+              else if dat.environment_name==='E2E1_UNAV_APP' && (dat.mon_appl_cntr==0)
                 td(align='right') #{dat.mon_appl_cntr}
                 - break
   .col-lg-5.col-md-4
@@ -81,7 +94,18 @@ br
           tr
             th(scope='row') Unavailable Services
             each dat, i in contentList
-              if dat.environment_name==='DEV2_UNAV_APP' || dat.environment_name==='E2E2_UNAV_APP'
+              if dat.environment_name==='DEV2_UNAV_APP' && (dat.mon_appl_cntr>0)
+                td(align='right') 
+                  a(href=unavailableDevServsUrl) #{dat.mon_appl_cntr}
+                  - break
+              else if dat.environment_name==='DEV2_UNAV_APP' && (dat.mon_appl_cntr==0)
+                td(align='right') #{dat.mon_appl_cntr}
+                - break
+              else if dat.environment_name==='E2E2_UNAV_APP' && (dat.mon_appl_cntr>0)
+                td(align='right') 
+                  a(href=unavailableTestServsUrl) #{dat.mon_appl_cntr}
+                  - break
+              else if dat.environment_name==='E2E2_UNAV_APP' && (dat.mon_appl_cntr==0)
                 td(align='right') #{dat.mon_appl_cntr}
                 - break
   .col-lg-5.col-md-4
@@ -109,7 +133,18 @@ br
           tr
             th(scope='row') Unavailable DB Services
             each dat, i in contentList
-              if dat.environment_name==='DEV1_UNAV_DB' || dat.environment_name==='E2E1_UNAV_DB'
+              if dat.environment_name==='DEV1_UNAV_DB' && (dat.mon_appl_cntr>0)
+                td(align='right') 
+                  a(href=unavailableDevServsUrl) #{dat.mon_appl_cntr}
+                  - break
+              else if dat.environment_name==='DEV1_UNAV_DB' && (dat.mon_appl_cntr==0)
+                td(align='right') #{dat.mon_appl_cntr}
+                - break
+              else if dat.environment_name==='E2E1_UNAV_DB' && (dat.mon_appl_cntr>0)
+                td(align='right') 
+                  a(href=unavailableDevServsUrl) #{dat.mon_appl_cntr}
+                  - break
+              else if dat.environment_name==='E2E1_UNAV_DB' && (dat.mon_appl_cntr==0)
                 td(align='right') #{dat.mon_appl_cntr}
                 - break
   .col-lg-5.col-md-4
@@ -121,18 +156,33 @@ br
             each dat, i in contentList
               if dat.environment_name==='DEV2 DB' || dat.environment_name==='E2E2 DB'
                 td(align='right') #{dat.mon_appl_cntr}
+                - break
           tr
             th(scope='row') No of DB Processes Monitored
             each dat, i in contentList
               if dat.environment_name==='DEV2_SERVTYP_DB' || dat.environment_name==='E2E2_SERVTYP_DB'
                 td(align='right') #{dat.mon_appl_cntr}
+                - break
           tr
             th(scope='row') No of GG Processes Monitored
             each dat, i in contentList
               if dat.environment_name==='DEV2_SERVTYP_GG' || dat.environment_name==='E2E2_SERVTYP_GG'
                 td(align='right') #{dat.mon_appl_cntr}
+                - break
           tr
             th(scope='row') Unavailable DB Services
             each dat, i in contentList
-              if dat.environment_name==='DEV2_UNAV_DB' || dat.environment_name==='E2E2_UNAV_DB'
+              if dat.environment_name==='DEV2_UNAV_DB' && (dat.mon_appl_cntr>0)
+                td(align='right') 
+                  a(href=unavailableDevServsUrl) #{dat.mon_appl_cntr}
+                  - break
+              else if dat.environment_name==='DEV2_UNAV_DB' && (dat.mon_appl_cntr==0)
                 td(align='right') #{dat.mon_appl_cntr}
+                - break
+              else if dat.environment_name==='E2E2_UNAV_DB' && (dat.mon_appl_cntr>0)
+                td(align='right') 
+                  a(href=unavailableTestServsUrl) #{dat.mon_appl_cntr}
+                  - break
+              else if dat.environment_name==='E2E2_UNAV_DB' && (dat.mon_appl_cntr==0)
+                td(align='right') #{dat.mon_appl_cntr}
+                - break
