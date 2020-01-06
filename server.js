@@ -28,6 +28,8 @@ var devenv1DBConfDataRoutes = require('./routers/dev/showDevDBEnv1Data');
 var devenv2DBConfDataRoutes = require('./routers/dev/showDevDBEnv2Data');
 var findIssuesFromDB = require('./routers/findIssuesFromDB');
 
+var devenv2DBDataDashboardRoutes = require('./routers/dev/showDevDBEnv2DataDashboard');
+
 // Main Page Router..
 app.use('/', mainPageRoutes);
 
@@ -47,6 +49,9 @@ app.use('/showDevAPPEnv2Data', devenv2APPConfDataRoutes);
 app.use('/showDevDBEnv1Data', devenv1DBConfDataRoutes);
 app.use('/showDevDBEnv2Data', devenv2DBConfDataRoutes);
 app.use('/unavailableDevServsData', showUnavailableServsInDevEnv);
+
+// DEV Dashboards..
+app.use('/showDevDBEnv2DashboardData', devenv2DBDataDashboardRoutes);
 
 // DEV1 ENV CRUD Routers....
 app.get('/getDEV1DBConfig', dev1confdb.getDEV1DBConfig);

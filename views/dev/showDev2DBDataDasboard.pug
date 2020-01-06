@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    title #{title}
+    script(src='/public/js/jquery.min.js')
+    script(src='/public/js/popper.min.js')
+    script(src='/public/js/bootstrap.min.js')
+    link(rel='stylesheet', href='/public/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/public/css/index.css')
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    meta(http-equiv="refresh" content="150")
+
+  body
+    main
+      block header
+        include ../header.pug
+      block content
+        include Dev2DBDataContentInDashboard.pug
+      block footer
+        include ../footer.pug
