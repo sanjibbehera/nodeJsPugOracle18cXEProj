@@ -1,0 +1,76 @@
+
+- var ContentList = []
+- var CriticalContentList = []
+- var OverallContentList = []
+
+- ContentList = typeof(db2DataList) != 'undefined' ? db2DataList : { }
+- CriticalContentList = typeof(criticalDBServicesList) != 'undefined' ? criticalDBServicesList : { }
+- OverallContentList = typeof(overallDBList) != 'undefined' ? overallDBList : { }
+
+br
+.row.mb-3
+  .col-xl-3.col-lg-6
+    .card.card-inverse.card-success
+      .card-block.bg-success
+        .rotate
+          i.fa.fa-user.fa-5x
+        .h5.text-capitalize Total Application DB's Monitored:
+        each data, i in OverallContentList
+          if data.appl_service_status==='TOTAL MONITORED SERVICES'
+            .h1.display-1 #{data.counts}
+  .col-xl-3.col-lg-6
+    .card.card-inverse.card-success
+      .card-block.bg-success
+        .rotate
+          i.fa.fa-user.fa-5x
+        .h5.text-capitalize Total DB's Normal Services Count:
+        each data, i in OverallContentList
+          if data.appl_service_status==='NORMAL'
+            .h1.display-1 #{data.counts}
+  .col-xl-3.col-lg-6
+    .card.card-inverse.card-success
+      .card-block.bg-success
+        .rotate
+          i.fa.fa-user.fa-5x
+        .h5.text-capitalize Total DB's High Services Count:
+        each data, i in OverallContentList
+          if data.appl_service_status==='HIGH'
+            .h1.display-1 #{data.counts}
+  .col-xl-3.col-lg-6
+    .card.card-inverse.card-success
+      .card-block.bg-success
+        .rotate
+          i.fa.fa-user.fa-5x
+        .h5.text-capitalize Total DB's Critical Services Count:
+        each data, i in OverallContentList
+          if data.appl_service_status==='TOTAL MONITORED SERVICES'
+            .h1.display-1.text-danger #{data.counts}
+
+div(class="myFirstChart")
+  canvas(id="myFirstChart", width="50", height="50")
+  script.
+    var canvas = document.getElementById("myFirstChart");
+    var ctx = canvas.getContext('2d');
+    ctx.height = 50;
+    // Data with datasets options
+    var graphData = {
+      labels: ["One", "Two", "Tree"],
+      datasets: [{
+        label: "Numbers !",
+        fill: true,
+        backgroundColor: "orange",
+        borderColor: "tomato",
+        data: [1, 2, 3],
+      }]
+    };
+    var myFirstChart = new Chart(ctx, {
+        type: 'bar',
+        data: graphData,
+        options: {
+            title: {
+                fontSize: 20,
+                display: true,
+                text: "My First Chart!"
+            }
+        }
+    });
