@@ -3,11 +3,13 @@
 - var CriticalContentList = []
 - var OverallContentList = []
 - var AppsList = []
+- var overallServStatsList = []
 
 - ContentList = typeof(db2DataList) != 'undefined' ? db2DataList : { }
 - CriticalContentList = typeof(criticalDBServicesList) != 'undefined' ? criticalDBServicesList : { }
 - OverallContentList = typeof(overallDBList) != 'undefined' ? overallDBList : { }
 - AppsList = typeof(appList) != 'undefined' ? appList : { }
+- overallServStatsList = typeof(overallDBList) != 'undefined' ? overallDBList : { }
 
 
 br
@@ -54,9 +56,30 @@ br
   script.
     var servsCtx = document.getElementById('barChart');
     var appsName = !{JSON.stringify(AppsList)};
+    var overallStats = !{JSON.stringify(overallServStatsList)};
     var appNameArr = [];
+    var overallNormalStatsArr = [];
+    var overallHighStatsArr = [];
+    var overallCriticalStatsArr = [];
     for(var index in appsName) {
         appNameArr.push(appsName[index].application_name);
+    }
+    for(var idx in overallStats) {
+        if(overallStats[idx].appl_service_status === 'NORMAL'){
+            overallNormalStatsArr.push(overallStats[idx].counts);
+            overallHighStatsArr.push('0');
+            overallCriticalStatsArr.push('0');
+        }
+        else if(overallStats[idx].appl_service_status === 'HIGH'){
+            overallNormalStatsArr.push('0');
+            overallHighStatsArr.push(overallStats[idx].counts);
+            overallCriticalStatsArr.push('0');
+        }
+        else if(overallStats[idx].appl_service_status === 'CRITICAL'){
+            overallNormalStatsArr.push('0');
+            overallHighStatsArr.push('0');
+            overallCriticalStatsArr.push(overallStats[idx].counts);
+        }
     }
     new Chart(servsCtx, {
         type: 'horizontalBar',
@@ -65,13 +88,13 @@ br
             datasets: [
             {
                 backgroundColor: "#3e95cd",
-                data:  ['10','11','12']
+                data:  overallNormalStatsArr
             }, {
                 backgroundColor: "#8e5ea2",
-                data: ['10','11','0']
+                data: overallHighStatsArr
             }, {
                 backgroundColor: "#8e5ea2",
-                data: ['8','21','22']
+                data: overallCriticalStatsArr
             }
             ]
         },
