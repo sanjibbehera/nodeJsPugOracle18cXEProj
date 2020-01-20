@@ -52,21 +52,26 @@ br
 .chart-conatiner
   canvas(id="barChart")
   script.
-    servsCtx = document.getElementById('barChart');
+    var servsCtx = document.getElementById('barChart');
+    var appsName = !{JSON.stringify(AppsList)};
+    var appNameArr = [];
+    for(var index in appsName) {
+        appNameArr.push(appsName[index].application_name);
+    }
     new Chart(servsCtx, {
         type: 'horizontalBar',
         data: {
-            labels: ['a','b','c','d'],
+            labels: appNameArr,
             datasets: [
             {
                 backgroundColor: "#3e95cd",
-                data:  ['10','11','12','14']
+                data:  ['10','11','12']
             }, {
                 backgroundColor: "#8e5ea2",
-                data: ['10','11','0','14']
+                data: ['10','11','0']
             }, {
                 backgroundColor: "#8e5ea2",
-                data: ['8','21','22','35']
+                data: ['8','21','22']
             }
             ]
         },
