@@ -124,7 +124,7 @@ function loadDashboardDataForDevDBEnv2Page(){
                 //res.redirect('/404');
                 res.status(404).end('error');
             } else {
-                console.log(overallDBData);
+                console.log(db2appData);
                 res.status(200).send(html);
             }
         });

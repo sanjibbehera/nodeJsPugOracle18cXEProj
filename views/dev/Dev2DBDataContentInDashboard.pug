@@ -2,10 +2,13 @@
 - var ContentList = []
 - var CriticalContentList = []
 - var OverallContentList = []
+- var AppsList = []
 
 - ContentList = typeof(db2DataList) != 'undefined' ? db2DataList : { }
 - CriticalContentList = typeof(criticalDBServicesList) != 'undefined' ? criticalDBServicesList : { }
 - OverallContentList = typeof(overallDBList) != 'undefined' ? overallDBList : { }
+- AppsList = typeof(appList) != 'undefined' ? appList : { }
+
 
 br
 .row.mb-3
@@ -46,31 +49,41 @@ br
           if data.appl_service_status==='TOTAL MONITORED SERVICES'
             .h1.display-1.text-danger #{data.counts}
 
-div(class="myFirstChart")
-  canvas(id="myFirstChart", width="50", height="50")
+.chart-conatiner
+  canvas(id="barChart")
   script.
-    var canvas = document.getElementById("myFirstChart");
-    var ctx = canvas.getContext('2d');
-    ctx.height = 50;
-    // Data with datasets options
-    var graphData = {
-      labels: ["One", "Two", "Tree"],
-      datasets: [{
-        label: "Numbers !",
-        fill: true,
-        backgroundColor: "orange",
-        borderColor: "tomato",
-        data: [1, 2, 3],
-      }]
-    };
-    var myFirstChart = new Chart(ctx, {
-        type: 'bar',
-        data: graphData,
+    servsCtx = document.getElementById('barChart');
+    new Chart(servsCtx, {
+        type: 'horizontalBar',
+        data: {
+            labels: ['a','b','c','d'],
+            datasets: [
+            {
+                backgroundColor: "#3e95cd",
+                data:  ['10','11','12','14']
+            }, {
+                backgroundColor: "#8e5ea2",
+                data: ['10','11','0','14']
+            }, {
+                backgroundColor: "#8e5ea2",
+                data: ['8','21','22','35']
+            }
+            ]
+        },
         options: {
             title: {
-                fontSize: 20,
                 display: true,
-                text: "My First Chart!"
+                text: 'E2E2 DB Services Overview'
+            },
+            legend: {
+                display: false,
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
             }
-        }
+        },
     });
