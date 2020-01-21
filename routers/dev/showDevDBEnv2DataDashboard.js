@@ -3,12 +3,18 @@ var router = express.Router();
 const oracledb = require('oracledb');
 const dbConfig = require('../../config/dbConf');
 
-var Results ="";
+var NormalResults ="";
+var HighResults ="";
+var CriticalResults ="";
 var OverallResults = "";
 var AppsResults = "";
 let connection;
-var resultSetData = {};
-var db2appData = [];
+var NormalResultSetData = {};
+var HighResultSetData = {};
+var CriticalResultSetData = {};
+var NormalDBServsData = [];
+var HighDBServsData = [];
+var CriticalDBServsData = [];
 var resultsappData = {};
 var appsData = [];
 var criticalDBServiceData = [];
@@ -22,9 +28,10 @@ options = {
     // fetchArraySize: 100       // internal buffer allocation size for tuning
 };
 
-function loadDashboardDataForDevDBEnv2Page(){
-    
-    db2appData = [];
+function loadDashboardDataForDevDBEnv2Page(){    
+    NormalDBServsData = [];  
+    HighDBServsData = [];  
+    CriticalDBServsData = [];
     criticalDBServiceData = [];
     overallDBData = [];
     appsData = [];
@@ -33,10 +40,7 @@ function loadDashboardDataForDevDBEnv2Page(){
     async function run() {
         try{
             connection = await oracledb.getConnection(dbConfig);
-            Results = await connection.execute(`select APPLICATION_NAME,  'TOTAL NO OF MONITORED SERVICES' as "APPL_SERVICE_STATUS" , COUNTS FROM (
-                select APPLICATION_NAME,  COUNT(*) COUNTS FROM dev2_db_config_data GROUP BY APPLICATION_NAME ORDER BY APPLICATION_NAME)
-                UNION ALL
-                select APPLICATION_NAME, APPL_SERVICE_STATUS, COUNTS  from 
+            NormalResults = await connection.execute(`select APPLICATION_NAME, APPL_SERVICE_STATUS, COUNTS  from 
                 (SELECT serv.application_name, srv_stat.APPL_SERVICE_STATUS, coalesce(TBL.CNTR , 0) COUNTS 
                 FROM (SELECT distinct application_name FROM dev2_db_config_data) SERV 
                 CROSS JOIN (SELECT 'CRITICAL' AS APPL_SERVICE_STATUS FROM DUAL 
@@ -45,7 +49,35 @@ function loadDashboardDataForDevDBEnv2Page(){
                 LEFT JOIN (SELECT APPLICATION_NAME, APPL_SERVICE_STATUS, COUNT(*) CNTR 
                 FROM dev2_db_config_data GROUP BY APPLICATION_NAME, APPL_SERVICE_STATUS) TBL 
                 ON TBL.APPLICATION_NAME = SERV.APPLICATION_NAME AND SRV_STAT.APPL_SERVICE_STATUS = TBL.APPL_SERVICE_STATUS 
-                ORDER BY serv.application_name, srv_stat.appl_service_status desc)`,
+                ORDER BY serv.application_name, srv_stat.appl_service_status desc) WHERE APPL_SERVICE_STATUS='NORMAL'`,
+            [], // no bind variables
+            {
+                resultSet: true // return a ResultSet (default is false)
+            });
+            HighResults = await connection.execute(`select APPLICATION_NAME, APPL_SERVICE_STATUS, COUNTS  from 
+                (SELECT serv.application_name, srv_stat.APPL_SERVICE_STATUS, coalesce(TBL.CNTR , 0) COUNTS 
+                FROM (SELECT distinct application_name FROM dev2_db_config_data) SERV 
+                CROSS JOIN (SELECT 'CRITICAL' AS APPL_SERVICE_STATUS FROM DUAL 
+                        UNION SELECT 'HIGH' AS APPL_SERVICE_STATUS FROM DUAL 
+                        UNION SELECT 'NORMAL' AS APPL_SERVICE_STATUS FROM DUAL) SRV_STAT 
+                LEFT JOIN (SELECT APPLICATION_NAME, APPL_SERVICE_STATUS, COUNT(*) CNTR 
+                FROM dev2_db_config_data GROUP BY APPLICATION_NAME, APPL_SERVICE_STATUS) TBL 
+                ON TBL.APPLICATION_NAME = SERV.APPLICATION_NAME AND SRV_STAT.APPL_SERVICE_STATUS = TBL.APPL_SERVICE_STATUS 
+                ORDER BY serv.application_name, srv_stat.appl_service_status desc) WHERE APPL_SERVICE_STATUS='HIGH'`,
+            [], // no bind variables
+            {
+                resultSet: true // return a ResultSet (default is false)
+            });
+            CriticalResults = await connection.execute(`select APPLICATION_NAME, APPL_SERVICE_STATUS, COUNTS  from 
+                (SELECT serv.application_name, srv_stat.APPL_SERVICE_STATUS, coalesce(TBL.CNTR , 0) COUNTS 
+                FROM (SELECT distinct application_name FROM dev2_db_config_data) SERV 
+                CROSS JOIN (SELECT 'CRITICAL' AS APPL_SERVICE_STATUS FROM DUAL 
+                        UNION SELECT 'HIGH' AS APPL_SERVICE_STATUS FROM DUAL 
+                        UNION SELECT 'NORMAL' AS APPL_SERVICE_STATUS FROM DUAL) SRV_STAT 
+                LEFT JOIN (SELECT APPLICATION_NAME, APPL_SERVICE_STATUS, COUNT(*) CNTR 
+                FROM dev2_db_config_data GROUP BY APPLICATION_NAME, APPL_SERVICE_STATUS) TBL 
+                ON TBL.APPLICATION_NAME = SERV.APPLICATION_NAME AND SRV_STAT.APPL_SERVICE_STATUS = TBL.APPL_SERVICE_STATUS 
+                ORDER BY serv.application_name, srv_stat.appl_service_status desc) WHERE APPL_SERVICE_STATUS='CRITICAL'`,
             [], // no bind variables
             {
                 resultSet: true // return a ResultSet (default is false)
@@ -69,23 +101,39 @@ function loadDashboardDataForDevDBEnv2Page(){
             {
                 resultSet: true // return a ResultSet (default is false)
             });
-            const rs = Results.resultSet;
-            let row;
+            const NormalRs = NormalResults.resultSet;
+            let NormalRow;
+            const HighRs = HighResults.resultSet;
+            let HighRow;
+            const CriticalRs = CriticalResults.resultSet;
+            let CriticalRow;
             const overallRS = OverallResults.resultSet;
             let overallRow;
             const AppsRS = AppsResults.resultSet;
             let appsRow;
 
-            while ((row = await rs.getRow())) {
-                resultSetData = {
-                    "application_name" : row[0],            //application_name variable
-                    "appl_service_status" : row[1],         //appl_service_status variable
-                    "counts" : row[2],                     //counter variable
+            while ((NormalRow = await NormalRs.getRow())) {
+                NormalResultSetData = {
+                    "application_name" : NormalRow[0],            //application_name variable
+                    "counts" : NormalRow[2],                     //counter variable
                 };
-                db2appData.push(resultSetData);
-                if(row[1] === 'CRITICAL'){
-                    criticalDBServiceData.push(resultSetData);
-                }
+                NormalDBServsData.push(NormalResultSetData);
+            }
+
+            while ((HighRow = await HighRs.getRow())) {
+                HighResultSetData = {
+                    "application_name" : HighRow[0],            //application_name variable
+                    "counts" : HighRow[2],                     //counter variable
+                };
+                HighDBServsData.push(HighResultSetData);
+            }
+
+            while ((CriticalRow = await CriticalRs.getRow())) {
+                CriticalResultSetData = {
+                    "application_name" : CriticalRow[0],            //application_name variable
+                    "counts" : CriticalRow[2],                     //counter variable
+                };
+                CriticalDBServsData.push(CriticalResultSetData);
             }
             while ((overallRow = await overallRS.getRow())) {
                 overallResultSetData = {
@@ -101,7 +149,9 @@ function loadDashboardDataForDevDBEnv2Page(){
                 appsData.push(resultsappData);
             }         
             // always close the ResultSet
-            await rs.close();
+            await NormalRs.close();
+            await HighRs.close();
+            await CriticalRs.close();
             await overallRS.close();
         }
         catch(error){
@@ -119,12 +169,13 @@ function loadDashboardDataForDevDBEnv2Page(){
 
     router.get('/', function(req, res) {
         res.render('dev/showDev2DBDataDashboard', {title: 'Environment Management Dashboard', navbar_title: 'Welcome to Environment Configuration Managed System',
-        db2DataList: db2appData, criticalDBServicesList: criticalDBServiceData, overallDBList: overallDBData, appList: appsData}, function(err, html) {
+        NormalDBServsDataList: NormalDBServsData, HighDBServsDataList: HighDBServsData, CriticalDBServsDataList: CriticalDBServsData,
+        criticalDBServicesList: criticalDBServiceData, overallDBList: overallDBData, appList: appsData}, function(err, html) {
             if (err) {
                 //res.redirect('/404');
                 res.status(404).end('error');
             } else {
-                console.log(db2appData);
+                //console.log(appsData);
                 res.status(200).send(html);
             }
         });

@@ -1,15 +1,15 @@
 
-- var ContentList = []
-- var CriticalContentList = []
+- var NormalDBServsList = []
+- var HighDBServsList = []
+- var CriticalDBServsList = []
 - var OverallContentList = []
 - var AppsList = []
-- var overallServStatsList = []
 
-- ContentList = typeof(db2DataList) != 'undefined' ? db2DataList : { }
-- CriticalContentList = typeof(criticalDBServicesList) != 'undefined' ? criticalDBServicesList : { }
+- NormalDBServsList = typeof(NormalDBServsDataList) != 'undefined' ? NormalDBServsDataList : { }
+- HighDBServsList = typeof(HighDBServsDataList) != 'undefined' ? HighDBServsDataList : { }
+- CriticalDBServsList = typeof(CriticalDBServsDataList) != 'undefined' ? CriticalDBServsDataList : { }
 - OverallContentList = typeof(overallDBList) != 'undefined' ? overallDBList : { }
 - AppsList = typeof(appList) != 'undefined' ? appList : { }
-- overallServStatsList = typeof(overallDBList) != 'undefined' ? overallDBList : { }
 
 
 br
@@ -48,7 +48,7 @@ br
           i.fa.fa-user.fa-5x
         .h5.text-capitalize Total DB's Critical Services Count:
         each data, i in OverallContentList
-          if data.appl_service_status==='TOTAL MONITORED SERVICES'
+          if data.appl_service_status==='CRITICAL'
             .h1.display-1.text-danger #{data.counts}
 
 .chart-conatiner
@@ -56,30 +56,24 @@ br
   script.
     var servsCtx = document.getElementById('barChart');
     var appsName = !{JSON.stringify(AppsList)};
-    var overallStats = !{JSON.stringify(overallServStatsList)};
+    var NormalServsLst = !{JSON.stringify(NormalDBServsList)};
+    var HighServsLst = !{JSON.stringify(HighDBServsList)};
+    var CriticalServsLst = !{JSON.stringify(CriticalDBServsList)};
     var appNameArr = [];
-    var overallNormalStatsArr = [];
-    var overallHighStatsArr = [];
-    var overallCriticalStatsArr = [];
+    var NormalServsArr = [];
+    var HighServsArr = [];
+    var CriticalServsArr = [];
     for(var index in appsName) {
         appNameArr.push(appsName[index].application_name);
     }
-    for(var idx in overallStats) {
-        if(overallStats[idx].appl_service_status === 'NORMAL'){
-            overallNormalStatsArr.push(overallStats[idx].counts);
-            overallHighStatsArr.push('0');
-            overallCriticalStatsArr.push('0');
-        }
-        else if(overallStats[idx].appl_service_status === 'HIGH'){
-            overallNormalStatsArr.push('0');
-            overallHighStatsArr.push(overallStats[idx].counts);
-            overallCriticalStatsArr.push('0');
-        }
-        else if(overallStats[idx].appl_service_status === 'CRITICAL'){
-            overallNormalStatsArr.push('0');
-            overallHighStatsArr.push('0');
-            overallCriticalStatsArr.push(overallStats[idx].counts);
-        }
+    for(var idx in NormalServsLst) {
+        NormalServsArr.push(NormalServsLst[idx].counts);
+    }
+    for(var idy in HighServsLst) {
+        HighServsArr.push(HighServsLst[idy].counts);
+    }
+    for(var idz in CriticalServsLst) {
+        CriticalServsArr.push(CriticalServsLst[idz].counts);
     }
     new Chart(servsCtx, {
         type: 'horizontalBar',
@@ -88,13 +82,13 @@ br
             datasets: [
             {
                 backgroundColor: "#3e95cd",
-                data:  overallNormalStatsArr
+                data:  NormalServsArr
             }, {
                 backgroundColor: "#8e5ea2",
-                data: overallHighStatsArr
+                data: HighServsArr
             }, {
                 backgroundColor: "#8e5ea2",
-                data: overallCriticalStatsArr
+                data: CriticalServsArr
             }
             ]
         },
